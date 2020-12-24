@@ -47,7 +47,7 @@ basemodel_3d_checkpoint_path = 'basemodel_3d_checkpoint.pth'
 result_3d_basemodel = 'result_3D_basemodel.csv'
 
 criterion = nn.CrossEntropyLoss()
-
+#保存模型函数
 def save_checkpoint(epochs,optimizer,model,filepath):
 
     #if isinstance(model,nn.DataParallel):
@@ -57,7 +57,7 @@ def save_checkpoint(epochs,optimizer,model,filepath):
                   'model_state_dict':model.state_dict()}
 
     torch.save(checkpoint,filepath)
-
+#加载模型函数
 def load_checkpoint(filepath,model_name,phase='train',device='cpu'):
     checkpoint = torch.load(filepath,map_location=device)
     if model_name == 'basemodel_3d':
@@ -66,7 +66,7 @@ def load_checkpoint(filepath,model_name,phase='train',device='cpu'):
     model.eval()
     
     return model
-
+#训练模型的函数
 def train_data(model,train_dataloaders,valid_dataloaders,epochs,optimizer,scheduler,criterion,checkpoint_path,device='cpu'):
 
     start = time.time()
@@ -162,7 +162,7 @@ def train_data(model,train_dataloaders,valid_dataloaders,epochs,optimizer,schedu
     end = time.time()
     runing_time = end - start
     print('Training time is {:.0f}m {:.0f}s'.format(runing_time//60,runing_time%60))    
-
+#可视化
 def plt_result(dataframe):
     fig = plt.figure(figsize=(16,5))
     
@@ -186,7 +186,7 @@ def plt_result(dataframe):
 
     plt.show()
 
-
+#预测函数xQ
 def all_predict(test_dataloader,loadmodel,device,result_path):
     ''' Predict the class (or classes) of an image using a trained deep learning model.
     '''
